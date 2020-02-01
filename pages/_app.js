@@ -1,6 +1,7 @@
 import React from "react";
 import {Provider} from "react-redux";
 import App from "next/app";
+import Router from 'next/router';
 import withRedux from "next-redux-wrapper";
 
 import AppStore from '../store';
@@ -27,5 +28,17 @@ MyApp.getInitialProps = async (appContext) => {
 
     return { ...appProps }
 }
+
+Router.onRouteChangeStart = () => {
+    console.log('onRouteChnageStart triggered');
+};
+
+Router.onRouteChangeComplete = () => {
+    console.log('onRouteChnageComplete triggered');
+};
+
+Router.onRouteChangeError = () => {
+    console.log('onRouteChnageError triggered');
+};
 
 export default withRedux(AppStore)(MyApp);
