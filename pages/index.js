@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-unfetch';
+import Link from 'next/link';
 
 import Layout from '../components/Layout';
 
@@ -10,7 +11,9 @@ const Index = ( props ) => {
             {
                 posts.map(post => {
                     return (
-                        <p>{ post.title }</p>
+                        <p key={ post.id }>
+                            <Link href={ "/" + post.id }><a>{ post.title }</a></Link>
+                        </p>
                     );
                 })
             }
