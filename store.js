@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk';
 
 import allReducers from './reducers';
@@ -12,7 +12,17 @@ import allReducers from './reducers';
 * @param {string} options.storeKey This key will be used to preserve store in global namespace for safe HMR 
 */
 const makeStore = (initialState, options) => {
-    return createStore(allReducers, initialState, applyMiddleware(thunk));
+    const store = configureStore({
+        reducer: allReducers,
+        middleware: [thunk, ...getDefaultMiddleware()],
+        preloadedState: initialState
+    });
+
+    if (process.env.NODE_ENV !== 'production' && module.hot) {
+        module.hot.accept('./reducers', () => store.replaceReducer(rootReducer));
+    }
+    
+    return store
 };
 
 export default makeStore;

@@ -1,20 +1,23 @@
+import { createAction, createReducer } from '@reduxjs/toolkit';
+
 const initial = {
     data: [],
     loading: false,
     loaded: true
 };
 
-const reducer = (state = initial, action) => {
-    const { type, payload } = action;
+export const getAllPostStartAction = createAction('GET_ALL_POST_START');
+export const getAllPostSuccessAction = createAction('GET_ALL_POST_SUCCESS');
+export const getAllPostFailAction = createAction('GET_ALL_POST_FAIL');
 
-    switch (type) {
-        case 'LOAD_START':
-            return { ...state, data: [], loaded: false, loading: true };
-        case 'LOAD_SUCCESS':
-            return { ...state, data: payload, loaded: true, loading: false };
-        default:
-            return state
-    }
-};
+const reducer = createReducer(initial, {
+    [getAllPostStartAction]: (state, action) => {
+        return { ...state, data: [], loaded: false, loading: true };
+    },
+    [getAllPostSuccessAction]: (state, action) => {
+        return { ...state, data: action.payload, loaded: true, loading: false };
+    },
+    [getAllPostFailAction]: (state, action) => { return state }
+});
 
 export default reducer;

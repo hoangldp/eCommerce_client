@@ -1,7 +1,9 @@
 import fetch from 'isomorphic-unfetch';
 
+import { getAllPostStartAction, getAllPostSuccessAction } from '../reducers/post-reducer';
+
 export const startLoadAllPostAction = async () => {
-    return { type: 'LOAD_START' };
+    return getAllPostStartAction();
 };
 
 export const loadAllPostAction = async () => {
@@ -9,5 +11,6 @@ export const loadAllPostAction = async () => {
     const data = await fetch('https://jsonplaceholder.typicode.com/posts');
     const result = await data.json();
 
-    return { type: 'LOAD_SUCCESS', payload: result };
+    return getAllPostSuccessAction(result);
+    // return { type: 'LOAD_SUCCESS', payload: result };
 };
