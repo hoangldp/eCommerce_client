@@ -5,14 +5,10 @@ export const fetchWithCredentials = async (url, options) => {
     options.headers = options.headers || {};
     options.headers['Authorization'] = 'Bearer ' + jwtToken;
     var response = await fetch(url, options);
-    response.headers.forEach(console.log);
     if (response.ok) { //all is good, return the response
         return response;
     }
 
-    // response.headers.forEach(console.log);
-    console.log('status', response.status);
-    console.log('Token-Expired', response.headers.has('Token-Expired'));
     if (response.status === 401 && response.headers.has('Token-Expired')) {
         var refreshToken = getRefreshToken();
 
