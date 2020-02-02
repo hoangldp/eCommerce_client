@@ -7,7 +7,7 @@ import { loadAllPostAction, loadAllPost } from '../services/post-service';
 
 const Post = ( props ) => {
     const { isServer } = props;
-    const dataStore = useSelector(state => state.post);
+    const dataStore = useSelector(state => state.post.info);
     const posts = dataStore.data;
     const { loading } = dataStore;
 
