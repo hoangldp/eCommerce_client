@@ -1,4 +1,4 @@
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initial = {
     data: [],
@@ -6,18 +6,25 @@ const initial = {
     loaded: true
 };
 
-export const getAllPostStartAction = createAction('GET_ALL_POST_START');
-export const getAllPostSuccessAction = createAction('GET_ALL_POST_SUCCESS');
-export const getAllPostFailAction = createAction('GET_ALL_POST_FAIL');
-
-const reducer = createReducer(initial, {
-    [getAllPostStartAction]: (state, action) => {
-        return { ...state, data: [], loaded: false, loading: true };
-    },
-    [getAllPostSuccessAction]: (state, action) => {
-        return { ...state, data: action.payload, loaded: true, loading: false };
-    },
-    [getAllPostFailAction]: (state, action) => { return state }
+const postsSlice = createSlice({
+    name: 'posts',
+    initialState: initial,
+    reducers: {
+        getAllPostStartAction: (state, action) => {
+            return { ...state, data: [], loaded: false, loading: true };
+        },
+        getAllPostSuccessAction: (state, action) => {
+            return { ...state, data: action.payload, loaded: true, loading: false };
+        },
+        getAllPostFailAction: (state, action) => {
+            return state;
+        }
+    }
 });
 
+// Extract the action creators object and the reducer
+const { actions, reducer } = postsSlice;
+// Extract and export each action creator by name
+export const { getAllPostStartAction, getAllPostSuccessAction, getAllPostFailAction } = actions;
+// Export the reducer, either as a default or named export
 export default reducer;

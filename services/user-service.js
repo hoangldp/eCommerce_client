@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 
-import { loginStartAction, loginSuccessAction, getAllSuccessAction } from '../actions/user-action';
+import { loginStartAction, loginSuccessAction, getAllUserSuccessAction } from '../reducers/user-reducer';
 import { fetchWithCredentials } from '../utils/http-util';
 
 export const login = async (dispatch) => {
@@ -24,6 +24,6 @@ export const getAllUser = () => async (dispatch, getState) => {
     const response = await fetchWithCredentials('http://localhost:5000/api/user');
     if (response.ok) {
         const data = await response.json();
-        dispatch(getAllSuccessAction(data));
+        dispatch(getAllUserSuccessAction(data));
     }
 };

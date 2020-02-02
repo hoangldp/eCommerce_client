@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import Layout from '../components/Layout';
-import { login, getAllUser } from '../services/login-service';
+import { login, getAllUser } from '../services/user-service';
 
 const User = ( props ) => {
     const { isServer } = props;

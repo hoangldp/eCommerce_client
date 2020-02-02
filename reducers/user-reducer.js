@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit';
+
 const initial = {
     data: {},
     loading: false,
@@ -5,19 +7,34 @@ const initial = {
     users: []
 };
 
-const reducer = (state = initial, action) => {
-    const { type, payload } = action;
-
-    switch (type) {
-        case 'LOGIN_START':
+const postsSlice = createSlice({
+    name: 'posts',
+    initialState: initial,
+    reducers: {
+        loginStartAction: (state, action) => {
             return { ...state, data: {}, loaded: false, loading: true };
-        case 'LOGIN_SUCCESS':
-            return { ...state, data: payload, loaded: true, loading: false };
-        case 'GET_ALL_SUCCESS':
-            return { ...state, users: payload, loaded: true, loading: false };
-        default:
-            return state
+        },
+        loginSuccessAction: (state, action) => {
+            return { ...state, data: action.payload, loaded: true, loading: false };
+        },
+        loginFailAction: (state, action) => {
+            return state;
+        },
+        getAllUserStartAction: (state, action) => {
+            return state;
+        },
+        getAllUserSuccessAction: (state, action) => {
+            return { ...state, users: action.payload, loaded: true, loading: false };
+        },
+        getAllUserFailAction: (state, action) => {
+            return state;
+        }
     }
-};
+});
 
+// Extract the action creators object and the reducer
+const { actions, reducer } = postsSlice;
+// Extract and export each action creator by name
+export const { loginStartAction, loginSuccessAction, getAllUserSuccessAction } = actions;
+// Export the reducer, either as a default or named export
 export default reducer;

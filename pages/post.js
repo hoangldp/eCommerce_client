@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import Layout from '../components/Layout';
-import { loadAllPostAction, startLoadAllPostAction } from '../actions/post-action';
+import { loadAllPostAction, loadAllPost } from '../services/post-service';
 
 const Post = ( props ) => {
     const { isServer } = props;
@@ -13,7 +13,7 @@ const Post = ( props ) => {
 
     const dispatch = useDispatch();
     const loadAllPost = async () => {
-        dispatch(await startLoadAllPostAction());
+        // dispatch(await startLoadAllPostAction());
         dispatch(await loadAllPostAction());
     };
 
@@ -27,7 +27,7 @@ const Post = ( props ) => {
 
     useEffect(() => {
         return async () => {
-            dispatch(await startLoadAllPostAction());
+            // dispatch(await startLoadAllPostAction());
         }
     }, []);
 
@@ -50,7 +50,7 @@ const Post = ( props ) => {
 };
 
 Post.getInitialProps = async ( { store, isServer } ) => {
-    if (isServer) store.dispatch(await loadAllPostAction());
+    if (isServer) store.dispatch(await loadAllPost());
     return { isServer };
 };
 
