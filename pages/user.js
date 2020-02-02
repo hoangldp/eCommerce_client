@@ -26,7 +26,7 @@ const User = ( props ) => {
         <Layout>
             <p>{ `Loading: ${loading}, isServer: ${isServer}` }</p>
             <button onClick={() => login(dispatch)}>Login</button>
-            <button onClick={() => getAllUser(dispatch)}>Get all user</button>
+            <button onClick={() => dispatch(getAllUser())}>Get all user</button>
             <p>{ JSON.stringify(token) }</p>
             <p>{ JSON.stringify(users) }</p>
         </Layout>
@@ -34,7 +34,7 @@ const User = ( props ) => {
 };
 
 User.getInitialProps = async ( { store, isServer } ) => {
-    // if (isServer) store.dispatch(await loadAllPostAction());
+    // if (isServer) store.dispatch(getAllUser());
     return { isServer };
 };
 

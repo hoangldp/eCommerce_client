@@ -20,7 +20,7 @@ export const login = async (dispatch) => {
     dispatch(loginSuccessAction(data));
 };
 
-export const getAllUser = async (dispatch) => {
+export const getAllUser = () => async (dispatch, getState) => {
     const response = await fetchWithCredentials('http://localhost:5000/api/user');
     if (response.ok) {
         const data = await response.json();
