@@ -5,6 +5,7 @@ const Nav = () => {
         <div>
             <Link href="/"><a className="home">Home</a></Link>
             <Link href="/about"><a className="about">About</a></Link>
+            <Link href="/cookie"><a className="cookie">Cookie</a></Link>
             <Link href="/post"><a className="post">Post</a></Link>
             <Link href="/user"><a className="user">User</a></Link>
         </div>
