@@ -1,6 +1,7 @@
 import cookie from "js-cookie";
+import Router from "next/router";
 
-export const fetchWithCredentials = async (url, options) => {
+export const fetchWithCredentials = async (url, options, repeat) => {
     var jwtToken = getJwtToken();
     options = options || {};
     options['mode'] = 'cors';
@@ -11,22 +12,26 @@ export const fetchWithCredentials = async (url, options) => {
         return response;
     }
 
-    if (response.status === 401 && response.headers.has('Token-Expired')) {
+    if (!repeat && response.status === 401 && response.headers.has('Token-Expired')) {
         var refreshToken = getRefreshToken();
 
         var refreshResponse = await refresh(jwtToken, refreshToken);
         if (!refreshResponse.ok) {
             removeToken();
+            await logout();
             return response; //failed to refresh so return original 401 response
         }
         var jsonRefreshResponse = await refreshResponse.json(); //read the json with the new tokens
 
         saveToken(jsonRefreshResponse);
-        return await fetchWithCredentials(url, options); //repeat the original request
+        return await fetchWithCredentials(url, options, true); //repeat the original request
     } else { //status is not 401 and/or there's no Token-Expired header
+        if (response.status === 401) {
+            await logout();
+        }
         return response; //return the original 401 response
     }
-}
+};
 
 async function refresh(jwtToken, refreshToken) {
     const url = 'http://localhost:5000/api/user/refresh';
@@ -59,10 +64,18 @@ export const saveToken = (token) => {
 
     localStorage.setItem('token', token.token);
     localStorage.setItem('refreshToken', token.refreshToken);
-}
+};
 
-function removeToken() {
+export const removeToken = () => {
     cookie.remove('token');
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
-}
+};
+
+export const logout = async () => {
+    cookie.remove('token');
+    // to support logging out from all windows
+    removeToken();
+    window.localStorage.setItem('logout', Date.now());
+    await Router.push('/login');
+};

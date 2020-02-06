@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import Router from 'next/router'
 import nextCookie from 'next-cookies'
-import cookie from 'js-cookie'
 
 export const auth = ctx => {
   const { token } = nextCookie(ctx);
@@ -19,19 +18,20 @@ export const auth = ctx => {
   return token
 };
 
-export const logout = () => {
-  cookie.remove('token');
-  // to support logging out from all windows
-  window.localStorage.setItem('logout', Date.now());
-  Router.push('/login');
-};
+// export const logout = () => {
+//   cookie.remove('token');
+//   // to support logging out from all windows
+//   removeToken();
+//   window.localStorage.setItem('logout', Date.now());
+//   Router.push('/login');
+// };
 
 export const withAuthSync = WrappedComponent => {
   const Wrapper = props => {
-    const syncLogout = event => {
+    const syncLogout = async event => {
       if (event.key === 'logout') {
         console.log('logged out from storage!');
-        Router.push('/login');
+        await Router.push('/login');
       }
     };
 

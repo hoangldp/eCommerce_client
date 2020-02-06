@@ -9,8 +9,8 @@ import { login } from '../services/user-service';
 const Login = () => {
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
-    const dataStore = useSelector(state => state.user);
-    const { token } = dataStore;
+    const dataStore = useSelector(state => state.user.login);
+    const { token, loading } = dataStore;
 
     useEffect(() => {
         if (token.token) Router.push('/');
@@ -42,7 +42,7 @@ const Login = () => {
                                 <label>Password</label>
                                 <input type="password" className="form-control" name="password" ref={register} placeholder="Enter your password" />
                             </div>
-                            <button className="btn btn-az-primary btn-block" type="submit">Sign In</button>
+                            <button className="btn btn-az-primary btn-block" type="submit" disabled={loading}>Sign In</button>
                         </form>
                     </div>
                     <div className="az-signin-footer">

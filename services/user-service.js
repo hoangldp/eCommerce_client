@@ -1,11 +1,11 @@
 import fetch from 'isomorphic-unfetch';
 
-import { loginStartAction, loginSuccessAction, getAllUserSuccessAction } from '../reducers/user-reducer';
+import { loginStartAction, loginSuccessAction, loginFailAction } from '../reducers/user/login-reducer';
+import { getAllUserStartAction, getAllUserSuccessAction, getAllUserFailAction } from '../reducers/user/get-reducer';
 import { fetchWithCredentials, saveToken } from '../utils/http-util';
 
 export const login = data => async (dispatch) => {
-    dispatch(loginStartAction);
-    await new Promise(r => setTimeout(r, 2000));
+    dispatch(loginStartAction());
     const url = 'http://localhost:5000/api/user/authenticate';
     const response = await fetch(url, {
         method: 'POST',
@@ -13,15 +13,22 @@ export const login = data => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' }
     });
 
-    const dataResponse = await response.json();
-    saveToken(dataResponse);
-    dispatch(loginSuccessAction(dataResponse));
+    if (response.ok) {
+        const dataResponse = await response.json();
+        saveToken(dataResponse);
+        dispatch(loginSuccessAction(dataResponse));
+    } else {
+        dispatch(loginFailAction());
+    }
 };
 
 export const getAllUser = () => async (dispatch, getState) => {
+    dispatch(getAllUserStartAction());
     const response = await fetchWithCredentials('http://localhost:5000/api/user');
     if (response.ok) {
         const data = await response.json();
         dispatch(getAllUserSuccessAction(data));
+    } else {
+        dispatch(getAllUserFailAction());
     }
 };
