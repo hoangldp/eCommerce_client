@@ -1,23 +1,21 @@
 import fetch from 'isomorphic-unfetch';
 
 import { loginStartAction, loginSuccessAction, getAllUserSuccessAction } from '../reducers/user-reducer';
-import { fetchWithCredentials } from '../utils/http-util';
+import { fetchWithCredentials, saveToken } from '../utils/http-util';
 
-export const login = async (dispatch) => {
+export const login = data => async (dispatch) => {
     dispatch(loginStartAction);
-    // await new Promise(r => setTimeout(r, 2000));
+    await new Promise(r => setTimeout(r, 2000));
     const url = 'http://localhost:5000/api/user/authenticate';
     const response = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify({ username: "test", password: "test" }),
+        body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
     });
 
-    const data = await response.json();
-    const { token, refreshToken } = data;
-    localStorage.setItem('token', token);
-    localStorage.setItem('refreshToken', refreshToken);
-    dispatch(loginSuccessAction(data));
+    const dataResponse = await response.json();
+    saveToken(dataResponse);
+    dispatch(loginSuccessAction(dataResponse));
 };
 
 export const getAllUser = () => async (dispatch, getState) => {

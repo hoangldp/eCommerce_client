@@ -46,17 +46,16 @@ export default class MyDocument extends Document {
 
             {/* azia CSS */}
             <link rel="stylesheet" href="/css/azia.css" />
+            <script src="/lib/jquery/jquery.min.js"></script>
+            <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="/lib/ionicons/ionicons.js"></script>
         </Head>
         <body>
-          <Main />
+            <Main />
 
-          <script src="/lib/jquery/jquery.min.js"></script>
-          <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-          <script src="/lib/ionicons/ionicons.js"></script>
-          <script src="/js/azia.js"></script>
-          <script src="/js/dashboard.js"></script>
+            <NextScript />
 
-          <NextScript />
+            <script src="/js/azia.js"></script>
         </body>
       </html>
     )

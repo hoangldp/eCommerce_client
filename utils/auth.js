@@ -3,12 +3,6 @@ import Router from 'next/router'
 import nextCookie from 'next-cookies'
 import cookie from 'js-cookie'
 
-export const login = ({ token }) => {
-  // Create a cookie that expires 1 days from now, valid across the entire site
-  cookie.set('token', token, { expires: 1 });
-  Router.push('/');
-};
-
 export const auth = ctx => {
   const { token } = nextCookie(ctx);
 

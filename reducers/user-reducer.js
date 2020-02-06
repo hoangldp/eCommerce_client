@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initial = {
-    data: {},
+    token: {},
     loading: false,
     loaded: true,
     users: []
@@ -12,10 +12,10 @@ const postsSlice = createSlice({
     initialState: initial,
     reducers: {
         loginStartAction: (state, action) => {
-            return { ...state, data: {}, loaded: false, loading: true };
+            return { ...state, token: {}, loaded: false, loading: true };
         },
         loginSuccessAction: (state, action) => {
-            return { ...state, data: action.payload, loaded: true, loading: false };
+            return { ...state, token: action.payload, loaded: true, loading: false };
         },
         loginFailAction: (state, action) => {
             return state;

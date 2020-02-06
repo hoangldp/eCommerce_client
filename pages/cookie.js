@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import nextCookie from 'next-cookies'
 import cookie from 'js-cookie'
+import Head from "next/head";
 
 import { withAuthSync } from '../utils/auth';
 import Layout from '../components/Layout';
@@ -23,6 +24,11 @@ const Cookie = ( props ) => {
 
     return (
         <Layout>
+            <Head>
+                <title>Next app</title>
+                <script src="/js/cookie.js"></script>
+            </Head>
+
             <button onClick={handleSetCookie}>Set cookie</button>
             <button onClick={handleGetCookie}>Get cookie</button>
             <pre>{ JSON.stringify(test) }</pre>
