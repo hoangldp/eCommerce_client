@@ -1,10 +1,16 @@
 import Head from 'next/head';
+import { useEffect } from 'react';
 
 import Nav from './Nav';
 import BodyHeader from './BodyHeader';
 import Footer from './Footer';
 
 const Layout = ( props ) => {
+    useEffect(() => {
+        $.azia();
+        $.dashboard();
+    }, []);
+
     return (
         <div className="az-body az-body-sidebar">
             <Head>
@@ -19,12 +25,6 @@ const Layout = ( props ) => {
                 </div>
                 <Footer/>
             </div>
-
-            <script src="/lib/jquery/jquery.min.js"></script>
-            <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-            <script src="/lib/ionicons/ionicons.js"></script>
-            <script src="/js/azia.js"></script>
-            <script src="/js/dashboard.js"></script>
         </div>
     );
 };
